@@ -7,7 +7,7 @@ export default function PokemonList() {
   const { data: pokemons, isLoading, isError, error } = useQuery({
     queryKey: ['pokemons'],
     queryFn: async () => {
-      const list = await getPokemonList(100)
+      const list = await getPokemonList(1025)
 
       // Promise.all : 여러 비동기 작업을 병렬로 처리하고, 모든 작업이 완료될 때까지 기다림
       return Promise.all(
@@ -21,6 +21,8 @@ export default function PokemonList() {
             id: detail.id,
             name: koreanName || detail.name,
             image: detail.sprites.other["official-artwork"].front_default,
+                        // types 배열에서 타입 이름만 추출하여 새로운 배열을 만들고 반환
+            types: detail.types.map((t) => t.type.name),
           }
         })
       )
